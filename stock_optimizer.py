@@ -38,7 +38,7 @@ if __name__=="__main__":
     normed = prices / prices.values[0]
     
     # arbitrary allocations for each stock
-    allocs = [0.4, 0.4, 0.2]
+    allocs = [0.33, 0.33, 0.33]
     alloced = normed * allocs
     start_val = 1000000
 
@@ -68,6 +68,8 @@ if __name__=="__main__":
     print("std daily return: ", std_daily_returns)
     print("sharpe ratio: ", sharpe_ratio)
 
+    if sharpe_ratio < 0:
+        print("Looks like we made a bad investment. The rate of return is lesser than the risk-free return.")
 
 
 
