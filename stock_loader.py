@@ -32,6 +32,19 @@ if __name__=="__main__":
     start = dt.datetime(2008, 1, 1)
     end = dt.datetime(2009, 1, 1)
 
-    df = get_data(symbols=['GOOG', 'AAPL', 'SPY'], dates=pd.date_range(start, end))
+    prices = get_data(symbols=['GOOG', 'AAPL', 'SPY'], dates=pd.date_range(start, end))
     print("Size of the returned dataframe")
-    print(df.shape)
+    print(prices.shape)
+    normed = prices / prices.values[0]
+    # arbitrary allocations for each stock
+    allocs = [0.4, 0.4, 0.2]
+    alloced = normed * allocs
+    start_val = 1000000
+
+    pos_vals = alloced * start_val
+
+    port_val = pos_vals.sum(axis=1) # Sum across columns
+
+
+    
+
