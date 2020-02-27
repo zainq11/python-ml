@@ -36,6 +36,7 @@ if __name__=="__main__":
     print("Size of the returned dataframe")
     print(prices.shape)
     normed = prices / prices.values[0]
+    
     # arbitrary allocations for each stock
     allocs = [0.4, 0.4, 0.2]
     alloced = normed * allocs
@@ -44,6 +45,30 @@ if __name__=="__main__":
     pos_vals = alloced * start_val
 
     port_val = pos_vals.sum(axis=1) # Sum across columns
+
+    # compute statistics
+    daily_returns = (port_val / port_val.shift(1)) - 1
+    daily_returns.iloc[0] = 0
+    daily_returns = daily_returns[1:]
+
+    # cumulative return
+    cumulative_returns = port_val[-1]/port_val[0] - 1
+
+    # avg and std daily returns
+    avg_daily_returns = daily_returns.mean()
+    std_daily_returns = daily_returns.std()
+
+    # sharpe ratio (indicator for risk adjusted return)
+    # multiply with the sampling rate which is sqrt of 252 days of trading
+    sharpe_ratio = np.sqrt(252) * (avg_daily_returns / std_daily_returns)
+
+    
+    print("avg daily returns: ", avg_daily_returns)
+    print("cumulative return: ", cumulative_returns)
+    print("std daily return: ", std_daily_returns)
+    print("sharpe ratio: ", sharpe_ratio)
+
+
 
 
     
